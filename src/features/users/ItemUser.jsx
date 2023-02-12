@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useActions } from '../../hooks/useActions';
 
-export const ItemUser = ({ user, index, toggleModal, setCurrentUserId }) => {
+export const ItemUser = ({ user, index, toggleModal }) => {
   const navigate = useNavigate();
   const { setCurrentUser } = useActions();
 
@@ -39,7 +39,7 @@ export const ItemUser = ({ user, index, toggleModal, setCurrentUserId }) => {
           className='px-[18px] py-[5px] bg-[mediumblue] rounded-md'
           onClick={() => {
             toggleModal();
-            setCurrentUserId(user?.id);
+            setCurrentUser(user);
           }}
         >
           Albums

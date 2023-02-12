@@ -1,14 +1,18 @@
+import { useSelector } from 'react-redux';
+import { currentUserSelectors } from '../../app/currentUser';
 import { ItemAlbum } from './ItemAlbum';
 import { useGetUserAlbumsQuery } from './userAlbumsApiSlice';
 
-export const UserAlbums = ({ currentUserId, toggleModal }) => {
+export const UserAlbums = ({ toggleModal }) => {
+  const currentUser = useSelector(currentUserSelectors.getCurrentUser);
+
   const {
     data: albums,
     isLoading,
     isSuccess,
     isError,
     error,
-  } = useGetUserAlbumsQuery(currentUserId, { skip: !currentUserId });
+  } = useGetUserAlbumsQuery(currentUser?.id, { skip: !currentUser?.id });
 
   let content;
   if (isLoading) {
@@ -18,15 +22,15 @@ export const UserAlbums = ({ currentUserId, toggleModal }) => {
   } else if (isSuccess) {
     content = (
       <div className='relative'>
-        <button
-          className='absolute  p-[5px] text-2xl top-0 right-[10px]'
-          onClick={toggleModal}
-        >
-          x
-        </button>
-        <div className=' w-[800px] h-[520px] bg-white rounded-lg px-[30px] pt-[20px] pb-[30px] overflow-auto'>
-          <p className=' text-xl'>Albums</p>
-          <ul>
+        <div className=' w-[800px] h-[520px] bg-white rounded-lg px-[30px] pt-[20px] pb-[30px] overflow-auto relative'>
+          <div className='fixed flex items-center justify-between pb-[20px] w-[750px] bg-[white]'>
+            <p className=' text-xl '>{`Albums ${currentUser?.name}`}</p>
+            <button className=' text-2xl ' onClick={toggleModal}>
+              x
+            </button>
+          </div>
+
+          <ul className='mt-[50px]'>
             {albums &&
               albums?.map((album, index) => {
                 return (

@@ -17,7 +17,6 @@ const UsersList = () => {
   } = useGetUsersQuery();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentUserId, setCurrentUserId] = useState(null);
 
   const toggleModal = () => setIsModalOpen((prev) => !prev);
 
@@ -67,7 +66,6 @@ const UsersList = () => {
                     key={crypto.randomUUID()}
                     index={i}
                     toggleModal={toggleModal}
-                    setCurrentUserId={setCurrentUserId}
                   />
                 );
               })}
@@ -77,7 +75,6 @@ const UsersList = () => {
         {isModalOpen && (
           <Modal onClose={toggleModal}>
             <UserAlbums
-              currentUserId={currentUserId}
               toggleModal={toggleModal}
             />
           </Modal>
